@@ -1,0 +1,64 @@
+body {
+	background-image: url(../img/back.png);
+	font-family:'Karla', helvetica, arial, sans-serif;
+}
+#wrapper {
+	max-width:960px;
+	margin:auto;
+}
+#wrapper > a {
+	background-image: linear-gradient(bottom, rgb(204,204,204) 0%, rgb(224,224,224) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(204,204,204) 0%, rgb(224,224,224) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(204,204,204) 0%, rgb(224,224,224) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(204,204,204) 0%, rgb(224,224,224) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(204,204,204) 0%, rgb(224,224,224) 100%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, rgb(204,204,204)),
+		color-stop(1, rgb(224,224,224))
+	);
+	border:1px solid #CCC;
+	margin:10px;
+	padding:10px;
+	-webkit-box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.2), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4);
+	box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.2), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4); 
+	text-shadow: 0px 1px 0px #FFFFFF;
+	filter: dropshadow(color=#FFFFFF, offx=0, offy=1); 
+	-webkit-border-radius: 2px;
+	border-radius: 2px; 
+	display:block;
+	color:#333;
+	text-decoration: none;
+	border-right:5px solid #CCC;
+}
+#wrapper > a .title {
+	font-size:24px;
+}
+#wrapper > a .by {
+	font-size:10px;
+	color:#666;
+}
+#wrapper > a .tags{
+	margin-top:10px;
+	margin-bottom:5px;
+}
+#wrapper > a .tags div{
+	background-color: rgba(0, 0, 0, 0.4);
+	color:#FFF;
+	text-shadow:none;
+	-webkit-border-radius: 10px;
+	border-radius: 10px; 
+	padding:5px;
+	padding-left:10px;
+	padding-right:10px;
+	font-size:10px;
+	margin:5px;
+	margin-top:0;
+	margin-left:0;
+	display:inline-block;
+	-webkit-box-shadow: inset 0px 1px 0px 0px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0px 1px 0px 0px rgba(0, 0, 0, 0.2); 
+}
