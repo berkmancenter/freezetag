@@ -83,11 +83,24 @@ function addItem(title, tags, author, date, link, ageRatio){
 			opacity:1 
 		}, fadeAnimateTime);
 	});
-	if (($('#wrapper > a').length > totalOnPage) || ($('#wrapper > a:last-child').outerHeight() * 4 + $('#wrapper > a:last-child').offset().top > $(window).height())){
+	if ($('#wrapper > a').length > totalOnPage){
 		var toRemove = $('#wrapper > a:last-child')
 		toRemove.fadeOut(fadeAnimateTime, function(){
 			toRemove.remove();
 		});
+	}
+	if (noOverflow){
+		var itemList = $('#wrapper > a');
+		for (var i = 0; i < itemList.length; i++){
+			var currEl = itemList[i];
+			if ($(currEl).outerHeight() * 3 + $(currEl).offset().top > $(window).height()){
+				$(currEl).fadeOut(fadeAnimateTime, (function(toRemove){
+					return (function(){
+						toRemove.remove();
+					});
+				})($(currEl)));
+			}
+		}
 	}
 }
 
