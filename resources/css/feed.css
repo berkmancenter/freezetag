@@ -19,6 +19,9 @@ body {
 	color:#FFF;
 	text-decoration: none;
 }
+
+/* Colors based from http://ethanschoonover.com/solarized */
+
 .a {
 	background-color:#2AA198;
 	text-shadow: 0px 1px 0px #186E67;
@@ -42,6 +45,30 @@ body {
 	text-shadow: 0px 1px 0px #A81714;
 	filter: dropshadow(color=#A81714, offx=0, offy=1); 
 	border:1px solid #A81714;
+}
+.e {
+	background-color:#B58900;
+	text-shadow: 0px 1px 0px #6B5100;
+	filter: dropshadow(color=#6B5100, offx=0, offy=1); 
+	border:1px solid #6B5100;
+}
+.f {
+	background-color:#CB4B16;
+	text-shadow: 0px 1px 0px #9E370D;
+	filter: dropshadow(color=#9E370D, offx=0, offy=1); 
+	border:1px solid #9E370D;
+}
+.g {
+	background-color:#6C71C4;
+	text-shadow: 0px 1px 0px #4E5185;
+	filter: dropshadow(color=#4E5185, offx=0, offy=1); 
+	border:1px solid #4E5185;
+}
+.h {
+	background-color:#859900;
+	text-shadow: 0px 1px 0px #5D6B00;
+	filter: dropshadow(color=#5D6B00, offx=0, offy=1); 
+	border:1px solid #5D6B00;
 }
 #wrapper > a .title {
 	font-size:24px;
