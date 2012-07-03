@@ -10,35 +10,40 @@ document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
     $_GET[decode(arguments[1])] = decode(arguments[2]);
 });
 
-var url = $_GET["url"];
-var per_page = $_GET['per_page'];
-var colorSchemeNumber = $_GET['color'];
-var intime = $_GET['intime'];
-var itertions = $_GET['iterations'];
-var totalOnPage = $_GET('total_on_page');
-
+var url = unescape($_GET["url"]);
+var per_page = parseInt($_GET['per_page']);
+var colorSchemeId = $_GET['color'];
+var slideAnimateTime = parseInt($_GET['animate_time']) * 200;
+var fadeAnimateTime = parseInt($_GET['animate_time']) * 800;
+var pauseTime = parseInt($_GET['pause_time']) * 1000;
+var iterations = parseInt($_GET['iterations']);
+var totalOnPage = parseInt($_GET['total_on_page']);
+var tagsOn = ($_GET['tags'] == 'true' ? true : false);
 
 // ACTUAL FUNCTIONS
-function addItem(title, tags, author, date, link, ageColor){
+function addItem(title, tags, author, date, link){
 	var tagString = "";
-	for (var i = 0; i < tags.length; i++){
+	for (var i = 0; i < tags.length && tagsOn; i++){
 		tagString += ("<div>" + tags[i] + "</div>");
 	}
 	var item = '\
-		<a href="' + link + '" style="opacity:0; display:none; border-right-color:' + ageColor + '">\
+		<a class="' + colorSchemeId + '" href="' + link + '" style="opacity:0; display:none; ">\
 			<div class="title">' + title + '</div>\
 			<div class="tags">' + tagString + '</div>\
 			<div class="by">Authored by ' + author + ', on ' + date + '</div>\
 		</a>';
 	var itemEl = $(item);
 	$("#wrapper").prepend(itemEl);
-	itemEl.slideDown(1000, function (){
+	itemEl.slideDown(slideAnimateTime, function (){
 		itemEl.animate({
 			opacity:1 
-		}, 2000);
+		}, fadeAnimateTime);
 	});
-	if ($('#wrapper > div').length > totalOnPage){
-		$($('#wrapper > div')[totalOnPage]).remove();
+	if ($('#wrapper > a').length > totalOnPage){
+		var toRemove = $($('#wrapper > a')[totalOnPage]);
+		toRemove.fadeOut(fadeAnimateTime, function(){
+			toRemove.remove();
+		});
 	}
 }
 
@@ -46,7 +51,7 @@ var feed = new Array();
 
 function fetchNews(){
 	$.ajax({
-		url: url + pageNumberStr,
+		url: url + "?per_page=" + per_page,
 		dataType: 'jsonp',
 		jsonp: "callback",
 		jsonpCallback: 'fetchNewsComplete'
@@ -54,7 +59,9 @@ function fetchNews(){
 }
 
 function fetchNewsComplete(data){
-	feed = data.feed_items;
+	for (var i = 0; i < iterations; i++){
+		feed = feed.concat(data.feed_items);
+	}
 	dropNews();
 }
 
@@ -73,7 +80,6 @@ function dropNews(){
 		var dateObj = new Date(currItem.date_published);
 		var dateStr = (["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])[dateObj.getDay()] + " " + (dateObj.getMonth() + 1) + "/" + dateObj.getDate() + "/" + dateObj.getFullYear();
 		// get age color 
-		var ageColor = Color("#FF6600");
 		var today = new Date();
 		var dayDiff = today.getTime() - dateObj.getTime();
 		dayDiff /= 1000; // get seconds
@@ -83,12 +89,15 @@ function dropNews(){
 		if (dayDiff > ageMax){
 			dayDiff = ageMax;
 		}
+		// TODO: possibly remove
 		var ratio = dayDiff / ageMax;
-		ageColor.desaturate(ratio);
 		// add it
-		addItem(currItem.title, tags, author, dateStr, currItem.url, ageColor.hexString());
+		addItem(currItem.title, tags, author, dateStr, currItem.url);
 		// set it to occur again
-		setTimeout(dropNews, 5000);
+		setTimeout(dropNews, pauseTime + slideAnimateTime + fadeAnimateTime);
+	}
+	else {
+		fetchNews();
 	}
 }
 
