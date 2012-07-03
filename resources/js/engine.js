@@ -16,8 +16,27 @@ document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
     $_GET[decode(arguments[1])] = decode(arguments[2]);
 });
 
+// set defaults in case user didn't define
+
+var getDefaults = {
+	'url': 'http://tagteam.harvard.edu/hubs/4/items.json',
+	'per_page': '25',
+	'color': 'b',
+	'animate_time': '2',
+	'pause_time': '0',
+	'iterations': '2',
+	'total_on_page': '10',
+	'tags': 'true',
+	'no_overflow': 'false'
+};
+
+for (var key in getDefaults){
+	if (typeof($_GET[key]) === 'undefined'){
+		$_GET[key] = getDefaults[key];
+	}
+}
+
 //  all relevant get variables
-// TODO: Set defaults so code doesn't break if undefined
 
 var url = unescape($_GET["url"]);
 var per_page = parseInt($_GET['per_page']);
@@ -28,6 +47,13 @@ var pauseTime = parseInt($_GET['pause_time']) * 1000;
 var iterations = parseInt($_GET['iterations']);
 var totalOnPage = parseInt($_GET['total_on_page']);
 var tagsOn = ($_GET['tags'] == 'true' ? true : false);
+var noOverflow = ($_GET['no_overflow'] == 'true' ? true : false);
+
+$(document).ready(function (){
+	 if (noOverflow){
+	 	$("body").css("overflow", "hidden");
+	 }
+});
 
 // ***********************
 // *** News Functions ****
@@ -35,7 +61,7 @@ var tagsOn = ($_GET['tags'] == 'true' ? true : false);
 
 // Actually adds the news item to the DOM
 
-function addItem(title, tags, author, date, link){
+function addItem(title, tags, author, date, link, ageRatio){
 	var tagString = "";
 	for (var i = 0; i < tags.length && tagsOn; i++){
 		tagString += ("<div>" + tags[i] + "</div>");
@@ -45,16 +71,20 @@ function addItem(title, tags, author, date, link){
 			<div class="title">' + title + '</div>\
 			<div class="tags">' + tagString + '</div>\
 			<div class="by">Authored by ' + author + ', on ' + date + '</div>\
+			<div class="smallDate"></div>\
 		</a>';
 	var itemEl = $(item);
 	$("#wrapper").prepend(itemEl);
+	var bColor = new Color(itemEl.css('background-color'));
+	bColor.desaturate(ageRatio);
+	itemEl.children(".smallDate").css('background-color', bColor.hexString())
 	itemEl.slideDown(slideAnimateTime, function (){
 		itemEl.animate({
 			opacity:1 
 		}, fadeAnimateTime);
 	});
-	if ($('#wrapper > a').length > totalOnPage){
-		var toRemove = $($('#wrapper > a')[totalOnPage]);
+	if (($('#wrapper > a').length > totalOnPage) || ($('#wrapper > a:last-child').outerHeight() * 4 + $('#wrapper > a:last-child').offset().top > $(window).height())){
+		var toRemove = $('#wrapper > a:last-child')
 		toRemove.fadeOut(fadeAnimateTime, function(){
 			toRemove.remove();
 		});
@@ -110,7 +140,7 @@ function dropNews(){
 		// TODO: possibly remove, or find use for it
 		var ratio = dayDiff / ageMax;
 		// add it
-		addItem(currItem.title, tags, author, dateStr, currItem.url);
+		addItem(currItem.title, tags, author, dateStr, currItem.url, ratio);
 		// loop
 		setTimeout(dropNews, pauseTime + slideAnimateTime + fadeAnimateTime);
 	}

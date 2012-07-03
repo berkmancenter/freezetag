@@ -3,7 +3,6 @@ html, body {
 	padding:0;
 	width:100%;
 	height:100%;
-	background-image: url(../img/back.png);
 	font-size:0;
 }
 iframe {
@@ -12,4 +11,5 @@ iframe {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;  
 	display:inline-block;
+	background:transparent;
 }
