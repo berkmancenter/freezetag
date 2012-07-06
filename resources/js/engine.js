@@ -127,7 +127,7 @@ function fetchNewsComplete(data){
 // var used as an end point to determine whether news is old news
 var ageMax = 5; // in days
 
-// removes news item from queue to display, then it cals itself again
+// removes news item from queue to display, then it calls itself again
 function dropNews(){
 	// get news item
 	var currItem = feed.shift();
