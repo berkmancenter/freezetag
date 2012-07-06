@@ -31,7 +31,7 @@ var getDefaults = {
 };
 
 for (var key in getDefaults){
-	if (typeof($_GET[key]) === 'undefined'){
+	if (typeof($_GET[key]) === 'undefined' || $_GET[key] === ""){
 		$_GET[key] = getDefaults[key];
 	}
 }

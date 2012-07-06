@@ -1,0 +1,55 @@
+html {
+	background-image: url(../img/back.png);
+	font-family:'Karla', helvetica, arial, sans-serif;
+}
+#wrapper {
+	display:block;
+	width:920px;
+	margin:auto;
+	margin-top:50px;
+	background-color:#FFF;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	padding:20px;
+}
+.fieldItem {
+	font-size:16px;
+}
+
+.fieldHint {
+	margin:10px;
+	color:#999;
+	font-size:12px;
+}
+input {
+	font-family:'Karla', helvetica, arial, sans-serif;
+}
+input[type="text"]{
+	width:100px;
+}
+input[name="url"] {
+	width:400px;
+}
+input[type="submit"]{
+	padding:5px;
+	font-size:12px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	border:1px solid #206596;
+	background-color:#268BD2;
+	text-shadow: 0px 1px 0px #206596;
+	filter: dropshadow(color=#206596, offx=0, offy=1); 
+	color:#FFF;
+	-webkit-box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.2), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4);
+	box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.2), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4);
+	cursor:pointer;cursor:hand
+}
+input[type="submit"]:hover{
+	background-color: #62AEE3;
+}
+input[type="submit"]:active{
+	background-color: #206596;
+}
+

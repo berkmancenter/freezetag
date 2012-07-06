@@ -3,19 +3,43 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>FreezeTag</title>
+		<link href='http://fonts.googleapis.com/css?family=Karla' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="resources/css/config.css" />
 	</head>
 	<body>
-		<form action="feed.html" method="GET">
-			URL: <input type="text" name="url"/><br />
-			Items to Load: <input type="text" name="per_page"/><br />
-			Color Scheme ID (a-h): <input type="text" name="color"/><br />
-			Time per Animation (seconds): <input type="text" name="animate_time"/><br />
-			Time Between Animations (seconds): <input type="text" name="pause_time"/><br />
-			Times to Iterate Through Feed Before Updating: <input type="text" name="iterations"/><br />
-			Max amount of items on the page at once: <input type="text" name="total_on_page"/><br />
-			Tags (true/false): <input type="text" name="tags"/><br />
-			Hide Overflow (true/false): <input type="text" name="no_overflow"/><br />
-			<input type="submit" />
-		</form>
+		<div id="wrapper">
+			<form action="feed.html" method="GET">
+				<div class="fieldItem">URL: <input type="text" name="url" placeholder="http://tagteam.harvard.edu/hubs/4/items.json"/></div>
+				<div class="fieldHint">The TagTeam URL for the JSONP resource which you want to display</div>
+				<div class="fieldItem">Items to Load: <input type="text" name="per_page" placeholder="25"/></div>
+				<div class="fieldHint">FreezeTag loads only a certain amount of items and loops through those</div>
+				<div class="fieldItem">Color Scheme ID: 
+					<select name="color">
+						<option value="a">Cyan</option>
+						<option value="b" selected="selected">Blue</option>
+						<option value="c">Pink</option>
+						<option value="d">Red</option>
+						<option value="e">Yellow</option>
+						<option value="f">Orange</option>
+						<option value="g">Purple</option>
+						<option value="h">Green</option>
+					</select>
+				</div>
+				<div class="fieldHint">FreezeTag provides 8 default color schemes to help style multifeed pages. Based on <a href="http://ethanschoonover.com/solarized">The Solarized Theme</a></div>
+				<div class="fieldItem">Time per Animation (seconds): <input type="text" name="animate_time" placeholder="2"/></div>
+				<div class="fieldHint">How long a news item takes to appear</div>
+				<div class="fieldItem">Time Between Animations (seconds): <input type="text" name="pause_time" placeholder="0"/></div>
+				<div class="fieldHint">After a news item appears, how long until the next one should appear</div>
+				<div class="fieldItem">Times to Iterate Through Feed Before Updating: <input type="text" name="iterations" placeholder="2"/></div>
+				<div class="fieldHint">The amount of times FreezeTag will show each news item before fetching updated news</div>
+				<div class="fieldItem">Max amount of items on the page at once: <input type="text" name="total_on_page" placeholder="10"/></div>
+				<div class="fieldHint">After how many items should FreezeTag remove the item from the page</div>
+				<div class="fieldItem">Tags: <input type="radio" name="tags" checked="checked" value="true" /> True <input type="radio" name="tags" value="false" /> False</div>
+				<div class="fieldHint">Whether tags will be displayed or not</div>
+				<div class="fieldItem">Hide Overflow: <input type="radio" name="no_overflow" value="true" /> True <input type="radio" checked="checked" name="no_overflow" value="false" /> False</div>
+				<div class="fieldHint">Whether FreezeTag simply hides items before they would leave the visible area</div>
+				<input type="submit" value="Create." />
+			</form>
+		</div>
 	</body>
 </html>
