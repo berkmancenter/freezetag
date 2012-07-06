@@ -67,7 +67,7 @@ function addItem(title, tags, author, date, link, ageRatio){
 		tagString += ("<div>" + tags[i] + "</div>");
 	}
 	var item = '\
-		<a class="' + colorSchemeId + '" href="' + link + '" style="opacity:0; display:none; ">\
+		<a class="' + colorSchemeId + '" href="' + link + '" target="_blank" style="opacity:0; display:none; ">\
 			<div class="title">' + title + '</div>\
 			<div class="tags">' + tagString + '</div>\
 			<div class="by">Authored by ' + author + ', on ' + date + '</div>\
@@ -118,11 +118,24 @@ function fetchNews(){
 }
 
 function fetchNewsComplete(data){
+	feed = [];
 	for (var i = 0; i < iterations; i++){
 		feed = feed.concat(data.feed_items);
 	}
 	dropNews();
 }
+
+// pause on hover
+
+showNews = true;
+$(document).ready(function (){
+	$("#wrapper").mouseenter(function (){
+		showNews = false;
+	});
+	$("#wrapper").mouseleave(function (){
+		showNews = true;
+	});
+});
 
 // var used as an end point to determine whether news is old news
 var ageMax = 5; // in days
@@ -132,30 +145,34 @@ function dropNews(){
 	// get news item
 	var currItem = feed.shift();
 	if (typeof(currItem) !== 'undefined'){
-		// parse data
-		var tags = new Array();
-		if (!$.isEmptyObject(currItem.tags)){
-			tags = tags.concat(currItem.tags.tags);
+		if (showNews){
+			// parse data
+			var tags = new Array();
+			if (!$.isEmptyObject(currItem.tags)){
+				tags = tags.concat(currItem.tags.tags);
+			}
+			var author = ((currItem.authors == "" || currItem.authors == null)? "(author unknown)" : currItem.authors);
+			var dateObj = new Date(currItem.date_published);
+			var dateStr = (["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])[dateObj.getDay()] + " " + (dateObj.getMonth() + 1) + "/" + dateObj.getDate() + "/" + dateObj.getFullYear();
+			// get age color 
+			var today = new Date();
+			var dayDiff = today.getTime() - dateObj.getTime();
+			dayDiff /= 1000; // get seconds
+			dayDiff /= 60; // get minutes
+			dayDiff /= 60; // get hours
+			dayDiff /= 24; // get days
+			if (dayDiff > ageMax){
+				dayDiff = ageMax;
+			}
+			var ratio = dayDiff / ageMax;
+			// add it
+			addItem(currItem.title, tags, author, dateStr, currItem.url, ratio);
+			// loop
+			setTimeout(dropNews, pauseTime + slideAnimateTime + fadeAnimateTime);
 		}
-		var author = ((currItem.authors == "" || currItem.authors == null)? "(author unknown)" : currItem.authors);
-		var dateObj = new Date(currItem.date_published);
-		var dateStr = (["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])[dateObj.getDay()] + " " + (dateObj.getMonth() + 1) + "/" + dateObj.getDate() + "/" + dateObj.getFullYear();
-		// get age color 
-		var today = new Date();
-		var dayDiff = today.getTime() - dateObj.getTime();
-		dayDiff /= 1000; // get seconds
-		dayDiff /= 60; // get minutes
-		dayDiff /= 60; // get hours
-		dayDiff /= 24; // get days
-		if (dayDiff > ageMax){
-			dayDiff = ageMax;
+		else {
+			setTimeout(dropNews, pauseTime);
 		}
-		// TODO: possibly remove, or find use for it
-		var ratio = dayDiff / ageMax;
-		// add it
-		addItem(currItem.title, tags, author, dateStr, currItem.url, ratio);
-		// loop
-		setTimeout(dropNews, pauseTime + slideAnimateTime + fadeAnimateTime);
 	}
 	else {
 		fetchNews();
