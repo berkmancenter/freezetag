@@ -38,7 +38,7 @@ for (var key in getDefaults){
 
 //  all relevant get variables
 
-var url = unescape($_GET["url"]);
+var url = unescape($_GET["url"]).split("?")[0]; // remove any pre-existant GET variables
 var per_page = parseInt($_GET['per_page']);
 var colorSchemeId = $_GET['color'];
 var slideAnimateTime = parseInt($_GET['animate_time']) * 200;
