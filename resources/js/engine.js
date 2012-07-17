@@ -71,13 +71,9 @@ function addItem(title, tags, author, date, link, ageRatio){
 			<div class="title">' + title + '</div>\
 			<div class="tags">' + tagString + '</div>\
 			<div class="by">Authored by ' + author + ', on ' + date + '</div>\
-			<div class="smallDate"></div>\
 		</a>';
 	var itemEl = $(item);
 	$("#wrapper").prepend(itemEl);
-	var bColor = new Color(itemEl.css('background-color'));
-	bColor.desaturate(ageRatio);
-	itemEl.children(".smallDate").css('background-color', bColor.hexString())
 	itemEl.slideDown(slideAnimateTime, function (){
 		itemEl.animate({
 			opacity:1 
