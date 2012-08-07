@@ -20,4 +20,4 @@ FreezeTag is completely client side and uses: HTML, CSS, JS, JQuery, and color.j
 
 This application is released under a GPLv3 license.
 
-2012 President and Fellows of Harvard College
+Copyright President and Fellows of Harvard College, 2012
