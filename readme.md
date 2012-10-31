@@ -16,6 +16,8 @@ Index.html is a boilerplate for displaying multiple feeds on one page. Simply pu
 
 FreezeTag is completely client side and uses: HTML, CSS, JS, JQuery, and color.js. In addition, all data is fetched from TagTeam using JSONP, allowing FreezeTag to be completely client side and still run on any server.
 
+Background texture from http://subtlepatterns.com
+
 ## License
 
 This application is released under a GPLv3 license.
